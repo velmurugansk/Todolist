@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import { useState } from 'react';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 
 function Addtodo() {
 
@@ -9,7 +9,7 @@ function Addtodo() {
   const [content, setContent] = useState('');
   const [error, setError] = useState('');
 
-  const validation = () => {
+  const validation = () => {    
     if (!title) {
       setError('Title is Required!')
     } else {
@@ -17,14 +17,15 @@ function Addtodo() {
     }
   }
 
-  const sucessnotify = (msg) => {
-    toast.success(msg, { autoClose: 7000 });
-  }
-
+  
   const addTodo = async () => {
-    const response = await axios.post('http://localhost:4000/Addtodo', { title, content });
-    if (response.status) {
-      sucessnotify(response.message);
+    const response = await axios.post('http://localhost:4000/Addtodo', { title, content });    
+    if (response.data.status) {
+      setTitle('');
+      setContent('');
+      toast.success(response.data.message, { autoClose: 7000 });
+    } else {
+      toast.error(response.data.message,{ autoClose: 7000 });
     }
   }
 
@@ -39,7 +40,8 @@ function Addtodo() {
         <textarea placeholder='message' onChange={(e) => setContent(e.target.value)} className='w-full px-3 py-2 focus:outline-none
              focus:border-sky-500 focus:ring-1 focus:ring-sky-500 border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400'></textarea>
       </div>
-      <button class="bg-sky-500 hover:bg-sky-700 mt-2 px-3 py-2 rounded-lg text-white" onClick={validation}> Add ToDo</button>
+      <button class="bg-sky-500 hover:bg-sky-700 mt-2 px-3 py-2 rounded-lg text-white" id="subBtn" onClick={validation}> Add ToDo</button>
+      <ToastContainer autoClose={8000} />
     </div>
   )
 }

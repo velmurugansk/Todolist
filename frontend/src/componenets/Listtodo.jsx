@@ -20,11 +20,13 @@ function Listtodo() {
         console.log(id);   
     }
 
-    function delteTodo(id) {
-        const response = axios.post('http://localhost:4000/deletetodo', {"_id":id});
-        console.log(response)
-        if(response.status) {
-            sucessnotify(response.message);
+    const delteTodo = async (id) => {
+        const response =await  axios.post('http://localhost:4000/deletetodo', {"_id":id});                
+        if(response.data.status) {
+            sucessnotify(response.data.message);
+            todolistdata()
+        } else {
+            toast.error(response.data.message,{ autoClose: 7000 });
         }
     }
 
