@@ -1,4 +1,5 @@
 import Layout from "./componenets/Layout";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
