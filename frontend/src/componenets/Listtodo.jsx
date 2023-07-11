@@ -5,7 +5,8 @@ import {FiEdit2} from "react-icons/fi";
 import {AiOutlineDelete} from "react-icons/ai";
 import { toast } from 'react-toastify';
 
-function Listtodo() {
+function Listtodo({handleClick}) {
+    console.log(handleClick)
     const [listdata, setListdata] = useState([]);
     const todolistdata = async () => {
         const response = await axios.get('http://localhost:4000/');
@@ -30,7 +31,11 @@ function Listtodo() {
         }
     }
 
-    useEffect(() => {
+    if(handleClick){
+        todolistdata()
+    }
+
+    useEffect(() => {        
         todolistdata()
     },[])
     
